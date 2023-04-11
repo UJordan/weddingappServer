@@ -1,49 +1,49 @@
 const express = require('express');
-const campsiteRouter = express.Router();
+const rsvpRouter = express.Router();
 
-campsiteRouter.route('/')
+rsvpRouter.route('/')
 .all((req, res, next) => {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/plain');
     next();
 })
 .get((req, res) => {
-    res.end('Will send all the campsites to you');
+    res.end('Will send all the rsvps to you');
 })
 .post((req, res) => {
-    res.end(`Will add the campsite: ${req.body.name} with description: ${req.body.description}`);
+    res.end(`Will add the rsvp: ${req.body.name} with description: ${req.body.description}`);
 })
 .put((req, res) => {
     res.statusCode = 403;
-    res.end('PUT operation not supported on /campsites');
+    res.end('PUT operation not supported on /people');
 })
 .delete((req, res) => {
-    res.end('Deleting all campsites');
+    res.end('Deleting all rsvps');
 });
 
 
-campsiteRouter.route('/:campsiteId')
+rsvpRouter.route('/:rsvpId')
 .all((req, res, next) => {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/plain');
     next();
 })
 .get((req, res) => {
-    res.end(`Will send details of the campsite: ${req.params.campsiteId} to you`);
+    res.end(`Will send details of the rsvp: ${req.params.rsvpId} to you`);
 })
 .post((req, res) => {
     res.statusCode = 403;
-    res.end(`POST operation not supported on /campsites/ ${req.params.campsiteId}`);
+    res.end(`POST operation not supported on /campsites/ ${req.params.rsvpId}`);
 })
 .put((req, res) => {
-    res.write(`Updating the campsites: ${req.params.campsiteId}.`);
+    res.write(`Updating the campsites: ${req.params.rsvpId}.`);
     res.end(` Will update the campsite: ${req.body.name} with description: ${req.body.description}`);
 })
 .delete((req, res) => {
-    res.end(`Deleting your campsites ${req.params.campsiteId}`);
+    res.end(`Deleting your campsites ${req.params.rsvpId}`);
 });
 
-module.exports = campsiteRouter;
+module.exports = rsvpRouter;
 
 
 // // a catch all routing method
