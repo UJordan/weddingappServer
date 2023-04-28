@@ -8,6 +8,20 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const rsvpRouter = require('./routes/rsvpRouter');
 
+const mongoose = require('mongoose');
+
+const url = 'mongodb://localhost:27017/weddingapp';
+const connect = mnogoose.connect(url, {
+  useCreateIndex: true,
+  useFindAndModify: false,
+  useNewUrlParser: true, 
+  useUnifiedTopology: true
+});
+
+connect.then(() => console.log('Connected correctly to server'),
+  err => console.log(err)
+);
+
 var app = express();
 
 // view engine setup
@@ -22,7 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/people', rsvpRouter);
+app.use('/rsvps', rsvpRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

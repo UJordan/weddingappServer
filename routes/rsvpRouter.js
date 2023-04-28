@@ -1,14 +1,17 @@
 const express = require('express');
+const Rsvp = require('../models/rsvp');
+
 const rsvpRouter = express.Router();
 
 rsvpRouter.route('/')
-.all((req, res, next) => {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
-    next();
-})
-.get((req, res) => {
-    res.end('Will send all the rsvps to you');
+.get((req, res, next) => {
+    Rsvp.find()
+    .then(rsvps => {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json(rsvps);
+    })
+    .catch(err => next(err));
 })
 .post((req, res) => {
     res.end(`Will add the rsvp: ${req.body.name} with description: ${req.body.description}`);
@@ -36,11 +39,11 @@ rsvpRouter.route('/:rsvpId')
     res.end(`POST operation not supported on /campsites/ ${req.params.rsvpId}`);
 })
 .put((req, res) => {
-    res.write(`Updating the campsites: ${req.params.rsvpId}.`);
-    res.end(` Will update the campsite: ${req.body.name} with description: ${req.body.description}`);
+    res.write(`Updating the rsvps: ${req.params.rsvpId}.`);
+    res.end(` Will update the rsvps: ${req.body.name} with description: ${req.body.description}`);
 })
 .delete((req, res) => {
-    res.end(`Deleting your campsites ${req.params.rsvpId}`);
+    res.end(`Deleting your rsvp ${req.params.rsvpId}`);
 });
 
 module.exports = rsvpRouter;
